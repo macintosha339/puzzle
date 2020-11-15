@@ -16,7 +16,7 @@ const cells = [];
 cells.push(empty);
 
 function move(index) {
-    const cell = cells[index];
+    const cell = cells[index + 1];
     const leftDiff = Math.abs(empty.left - cell.left);
     const topDiff = Math.abs(empty.top - cell.top);
 
@@ -27,6 +27,8 @@ function move(index) {
     cell.element.style.left = `${empty.left * cellSize}px`;
     cell.element.style.top = `${empty.top * cellSize}px`;
 
+    console.log('Before: ', cell);
+
     const emptyLeft = empty.left;
     const emptyTop = empty.top;
     empty.left = cell.left;
@@ -34,17 +36,19 @@ function move(index) {
     cell.left = emptyLeft;
     cell.top = emptyTop;
 
-    const isFinished = cells.every(cell => {
-       return cell.value === cell.top * 4 + cell.left;
-    });
+    console.log('After: ', cell);
 
+    const isFinished = cells.every(cell => {
+       return cell.value === ((cell.top * 4 + cell.left) + 1);
+    });
+    console.log(cells);
     if(isFinished) {
         alert('You won');
     }
 }
 
 const numbers = [...Array(15).keys()]
-    //.sort(() => Math.random() - 0.5);
+    .sort(() => Math.random() - 0.5);
 
 for(let i = 0; i <= 14; i++) {
     const cell = document.createElement('div');
